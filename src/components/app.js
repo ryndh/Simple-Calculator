@@ -10,42 +10,61 @@ export default class App extends Component {
 
     this.state={
       value: '',
+      dot: false,
     }
     this.handleClickNum = this.handleClickNum.bind(this)
     this.handleClickOp = this.handleClickOp.bind(this)
     this.handleClear = this.handleClear.bind(this)
     this.handleEqual = this.handleEqual.bind(this)
+    this.handleDot = this.handleDot.bind(this)
+    this.timer = this.timer.bind(this)
+  }
+
+  timer() {
+    console.log(this.state.dot)
+  }
+
+  componentDidMount(){
+    setInterval(this.timer, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
   }
 
   handleClear() {
-    this.setState({value:''})
+    this.setState({value:''});
+    this.setState({dot: false});
   }
 
   handleClickNum(e) {
       this.setState({value: this.state.value + e.target.innerHTML})
   }
 
-  // handleClickNum(e) {
-  //   const ops = ['+', '-', '*', '/']
-  //   if (ops.some(el => this.state.value.includes(el))) {
-  //     this.setState({value: math.eval(this.state.value + e.target.innerHTML)})
-  //   } else {
-  //     this.setState({value: this.state.value + e.target.innerHTML})
-  //   }
-  // }
-
   handleEqual() {
-    this.setState({value: math.eval(this.state.value)})
+    this.setState({value: math.eval(this.state.value)});
+    this.setState({dot: false});
+  }
+
+  handleDot(e) {
+    if (this.state.dot == false && !isNaN(this.state.value[this.state.value.length - 1])) {
+      this.setState({value: this.state.value + e.target.innerHTML});
+      this.setState({dot: true});
+    } else {
+      return null
+    }
   }
 
   handleClickOp(e) {
     const ops = ['+', '-', '*', '/']
     if (ops.includes(this.state.value[this.state.value.length - 1])) {
-      this.setState({value: this.state.value.slice(0, this.state.value.length - 1) + e.target.innerHTML })
-    } else if (this.state.value == ('' || 0)) {
+      this.setState({value: this.state.value.slice(0, this.state.value.length - 1) + e.target.innerHTML });
+      this.setState({dot: false});
+    } else if (this.state.value == '' || this.state.value == 0) {
       return null
     } else {
       this.setState({value: math.eval(this.state.value) + e.target.innerHTML})
+      this.setState({dot: false});
     }
   }
   render() {
@@ -67,7 +86,7 @@ export default class App extends Component {
               <Number click={this.handleClickNum} num={7}/>
               <Number click={this.handleClickNum} num={8}/>
               <Number click={this.handleClickNum} num={9}/>
-              <Number click={this.handleClickNum} num={'.'}/>
+              <Number click={this.handleDot} num={'.'}/>
               <Number click={this.handleClickNum} num={0} zero='zero'/>
             
             </div>
