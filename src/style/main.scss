@@ -1,0 +1,79 @@
+$buttons: skyblue;
+$calc-bg: white;
+$calc-num-color: white;
+$body-bg: rgb(141, 141, 141);
+$text-color: black;
+
+$calc-radius: 20px;
+
+html {
+    font-size: 70%;
+}
+
+.app-wrap {
+    height: 100vh;
+    margin: none;
+
+    .app {
+        display: grid;
+        justify-items: center;
+        padding-top: 30px;
+        .heading {
+            color: $text-color;
+            font-size: 3rem;
+        }
+        .total {
+            color: $text-color;
+        }
+        .calc-wrap {
+            display: flex;
+            margin-top: 20px;
+            background-color: $calc-bg;
+            border-radius: $calc-radius;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.733);
+            .num-wrap {
+                display: grid;
+                grid-template-columns:1fr [mid-s] 1fr [mid-e] 1fr;
+                grid-template-rows: repeat(1fr);
+                grid-gap: 10px;
+                border-right: 4px solid $buttons;
+                padding: 30px 20px;        
+                .number {
+                    padding: 15px 25px;
+                    font-size: 2.5rem;
+                    border-radius: 50%;
+                    background-color: $buttons;
+                    color: $calc-num-color;
+                    text-align: center;
+                    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.733);
+                }
+                .zero {
+                    grid-column: mid-s/mid-e;
+                }
+            }
+            .op-wrap {
+                display: grid;
+                grid-template-rows: repeat(1fr);
+                width: 70px;
+                border-top-right-radius: $calc-radius;
+                border-bottom-right-radius: $calc-radius;
+                justify-content: center;
+                align-items: center;
+                background-color: $calc-bg;
+                color: $buttons;
+                font-weight: 700;
+                grid-gap: 3px;
+                .op {
+                    font-size: 3rem;
+                    text-align: center;
+                }
+            }
+        }
+        .info {
+            margin-top: 50px;
+            font-size: 2rem;
+            text-align: center;
+        }
+       
+    }
+}
