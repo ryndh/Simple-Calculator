@@ -28,27 +28,13 @@ export default class App extends Component {
   }
 
   handleEqual(e) {
-    const ops = ['+', '-', '*', '/']
-    if (ops.some((el) => this.state.value.includes(el))) {
-      for (let item of ops) {
-        if (this.state.value.includes(item)) {
-          let operator = item
-          if (this.state.value.split(operator)[1]  == ('.') || this.state.value.split(operator)[0]  == ('.') ) {
-            return null
-          } else {
-              this.setState({ value: math.eval(this.state.value).toString() });
-          }
-        }
-      }
+    if (this.state.value[0] == ('.') || this.state.value[this.state.value.length - 1] == ('.')) {
+      return null
     } else {
-      if (this.state.value == ('.')) {
-        return null
-      } else {
-        this.setState({ value: math.eval(this.state.value).toString() });        
-      }
+      this.setState({ value: math.eval(this.state.value).toString() });
     }
-
   }
+
   handleDot(e) {
     const ops = ['+', '-', '*', '/']
     if (ops.some((el) => this.state.value.includes(el))) {
@@ -74,13 +60,18 @@ export default class App extends Component {
 
   handleClickOp(e) {
     const ops = ['+', '-', '*', '/']
-    if (ops.includes(this.state.value[this.state.value.length - 1])) {
-      this.setState({ value: this.state.value.slice(0, this.state.value.length - 1) + e.target.innerHTML });
-    } else if (this.state.value == '' || this.state.value == 0) {
+    if (this.state.value == '.' || this.state.value[this.state.value.length - 1] == '.') {
       return null
     } else {
-      this.setState({ value: math.eval(this.state.value) + e.target.innerHTML })
+      if (ops.includes(this.state.value[this.state.value.length - 1])) {
+        this.setState({ value: this.state.value.slice(0, this.state.value.length - 1) + e.target.innerHTML });
+      } else if (this.state.value == '' || this.state.value == 0) {
+        return null
+      } else {
+        this.setState({ value: math.eval(this.state.value) + e.target.innerHTML })
+      }
     }
+
   }
 
   render() {
