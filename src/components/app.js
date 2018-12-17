@@ -27,10 +27,28 @@ export default class App extends Component {
     this.setState({ value: this.state.value + e.target.innerHTML })
   }
 
-  handleEqual() {
-    this.setState({ value: math.eval(this.state.value).toString() });
-  }
+  handleEqual(e) {
+    const ops = ['+', '-', '*', '/']
+    if (ops.some((el) => this.state.value.includes(el))) {
+      for (let item of ops) {
+        if (this.state.value.includes(item)) {
+          let operator = item
+          if (this.state.value.split(operator)[1]  == ('.') || this.state.value.split(operator)[0]  == ('.') ) {
+            return null
+          } else {
+              this.setState({ value: math.eval(this.state.value).toString() });
+          }
+        }
+      }
+    } else {
+      if (this.state.value == ('.')) {
+        return null
+      } else {
+        this.setState({ value: math.eval(this.state.value).toString() });        
+      }
+    }
 
+  }
   handleDot(e) {
     const ops = ['+', '-', '*', '/']
     if (ops.some((el) => this.state.value.includes(el))) {
